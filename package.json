@@ -1,0 +1,40 @@
+{
+  "name": "hammad_portfolio_dev",
+  "version": "1.0.0",
+  "description": "A modern portfolio website built using the MERN stack, showcasing projects, skills, and achievements with a sleek, responsive design and seamless user experience",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HammadAfzalCode/Portfolio_Dev.git"
+  },
+  "keywords": [
+    "Next",
+    "Mongodb",
+    "Node",
+    "Express"
+  ],
+  "author": "Hammad Afzal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HammadAfzalCode/Portfolio_Dev/issues"
+  },
+  "homepage": "https://github.com/HammadAfzalCode/Portfolio_Dev#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.2",
+    "nodemailer": "^6.9.16"
+  }
+}
