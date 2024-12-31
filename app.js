@@ -32,7 +32,7 @@ dotenv.config({
   path: "./config/config.env",
 });
 
-app.use("/api/v1/message", messageRouter);
+app.use("/api/v1", messageRouter);
 
 dbConnection();
 
