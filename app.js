@@ -6,6 +6,7 @@ import fileUpload from "express-fileupload";
 import dbConnection from "./config/database/dbConnection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import messageRouter from "./router/messageRoutes.js";
+import userRouter from "./router/userRoutes.js";
 
 const app = express();
 app.use(
@@ -33,6 +34,7 @@ dotenv.config({
 });
 
 app.use("/api/v1", messageRouter);
+app.use("/api/v1", userRouter);
 
 dbConnection();
 
