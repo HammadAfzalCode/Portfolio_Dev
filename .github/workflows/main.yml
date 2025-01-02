@@ -1,0 +1,31 @@
+name: SSH to Remote Server
+
+on:
+  push:
+    branches:
+      - develop 
+
+jobs:
+  ssh:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y sshpass
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+
+    - name: Add SSH Host Key
+      run: |
+        ssh-keyscan -H 213.199.34.84 >> ~/.ssh/known_hosts || { echo "Failed to add host key"; exit 1; }
+
+    - name: Run Remote Script
+      env:
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      run: |
+        sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no dev@213.199.34.84 "bash /home/dev/E-invoice-backend/e-invoice_automation.sh" || { echo "SSH command failed"; exit 1; }
