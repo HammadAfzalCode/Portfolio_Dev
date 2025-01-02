@@ -3,6 +3,7 @@ import ErrorHandler from "../middlewares/error.js";
 
 import { User } from "../models/userSchema.js";
 import { v2 as cloudinary } from "cloudinary";
+import { generateToken } from "../utils/jwtToken.js";
 
 export const register = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -58,8 +59,5 @@ export const register = catchAsyncErrors(async (req, res, next) => {
       url: cloudinaryResumeRes.secure_url,
     },
   });
-  res.status(200).json({
-    success: true,
-    message: "User Registered",
-  });
+  generateToken(user, "user Registered", 201, res);
 });
