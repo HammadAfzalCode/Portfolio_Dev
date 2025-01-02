@@ -19,19 +19,3 @@ export const generateToken = (user, message, statusCode, response) => {
       user,
     });
 };
-
-export const login = catchAsyncErrors(async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return next(new ErrorHandler("Email And Password Are Required"));
-  }
-  const user = await User.findOne({ email }).select("+password");
-  if (!user) {
-    return next(new ErrorHandler("Invalid Email or Password"));
-  }
-  const isPasswordMatched = await user.comparePassword(password);
-  if (!isPasswordMatched) {
-    return next(new ErrorHandler("Invalid Email or Password"));
-  }
-  generateToken(user, "Logged In", 200, res);
-});
