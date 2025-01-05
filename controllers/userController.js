@@ -101,6 +101,50 @@ export const getUser = catchAsyncErrors(async (req, res, next) => {
 
 export const updateUser = catchAsyncErrors(async (res, req, next) => {
   const newUserData = {
-    fullName: req.body,
+    fullName: req?.body?.fullName,
+    email: req?.body?.email,
+    phone: req?.body?.phone,
+    aboutMe: req?.body?.aboutMe,
+    portfolioURL: req?.body?.portfolioURL,
+    githubURL: req?.body?.githubURL,
+    linkedInURL: req?.body?.linkedInURL,
   };
+  if (req?.files && req?.files?.avatar) {
+    const avatar = req.files.avatar;
+    const user = await User.findById(req.user.id);
+    const profileImageId = user.avatar.public_id;
+    await cloudinary.uploader.destroy(profileImageId);
+    const cloudinaryResponse = await cloudinary.uploader.upload(
+      avatar.tempFilePath,
+      { folder: "AVATAR" }
+    );
+    newUserData.avatar = {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url,
+    };
+  }
+  if (req.files && req.files.resume) {
+    const avatar = req.files.resume;
+    const user = await User.findById(req.user.id);
+    const profileResumeId = user.resume.public_id;
+    await cloudinary.uploader.destroy(profileResumeId);
+    const cloudinaryResponse = await cloudinary.uploader.upload(
+      avatar.tempFilePath,
+      { folder: "My_Resume" }
+    );
+    newUserData.resume = {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url,
+    };
+  }
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    userFindAndModify: false,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Profile Updated",
+    user,
+  });
 });
