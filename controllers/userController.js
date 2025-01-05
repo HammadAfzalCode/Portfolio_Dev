@@ -90,3 +90,17 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
       message: "Logged Our",
     });
 });
+
+export const getUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+export const updateUser = catchAsyncErrors(async (res, req, next) => {
+  const newUserData = {
+    fullName: req.body,
+  };
+});
